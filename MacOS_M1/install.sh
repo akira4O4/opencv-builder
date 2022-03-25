@@ -57,9 +57,7 @@ function run_cmake(){
 function make_opencv(){
   NUM_CPU=8
   echo "NUM_CPU: $NUM_CPU"
-  echo "NUM_CPU: $(sysctlhw.physicalcpu)"
-
-  time make -j$($NUM_CPU)
+  time make -j$NUM_CPU
 
   if [ $? -eq 0 ] ; then
     echo "OpenCV make successful"
@@ -101,8 +99,3 @@ echo $(pkg-config --cflags opencv4)
 
 echo "pkg-config --libs opencv4:"
 echo $(pkg-config --libs opencv4)
-
-echo "Write this command to .bashrc or .zshrc"
-echo 'export PKG_CONFIG_PATH=$OPENCV_CONTRIB_SOURCE_DIR:$PKG_CONFIG_PATH'
-echo 'export LD_LIBRARY_PATH=$INSTALL_DIR/lib:$LD_LIBRARY_PATH'
-echo 'export PATH=$OPENCV_CMAKE_PATH:$PATH'

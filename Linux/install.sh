@@ -142,8 +142,3 @@ echo $(pkg-config --cflags opencv4)
 
 echo "pkg-config --libs opencv4:"
 echo $(pkg-config --libs opencv4)
-
-echo "Write this command to .bashrc or .zshrc"
-echo 'export PKG_CONFIG_PATH=$OPENCV_CONTRIB_SOURCE_DIR:$PKG_CONFIG_PATH'
-echo 'export LD_LIBRARY_PATH=$INSTALL_DIR/lib:$LD_LIBRARY_PATH'
-echo 'export PATH=$OPENCV_CMAKE_PATH:$PATH'
