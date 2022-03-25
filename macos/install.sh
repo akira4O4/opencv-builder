@@ -8,7 +8,7 @@ CMAKE_INSTALL_PREFIX=$INSTALL_DIR
 PYTHON3_EXECUTABLE=/Users/lee/miniforge3/envs/torch/bin/python3
 OPENCV_SOURCE_DIR=/Users/lee/Desktop/github_download/opencv/opencv_4.x
 OPENCV_CONTRIB_SOURCE_DIR=/Users/lee/Desktop/github_download/opencv/opencv_contrib_4.x/modules
-OPENCV_PKG_PATH=/opt/opencv/build/lib/pkgconfig/opencv.pc
+OPENCV_PKG_PATH=${INSTALL_DIR}/lib/pkgconfig/opencv.pc
 
 echo "Build configuration: "
 echo " OpenCV Source will be installed in: $OPENCV_SOURCE_DIR"
