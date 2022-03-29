@@ -14,8 +14,8 @@ OPENCV_PKG_PATH=${INSTALL_DIR}/lib/pkgconfig/opencv.pc
 OPENCV_CMAKE_PATH=${INSTALL_DIR}/lib/cmake/opencv4
 
 echo "Build configuration: "
-echo " OpenCV Source will be installed in: $OPENCV_SOURCE_DIR"
-echo " OpenCV Contrib Source will be installed in: $OPENCV_CONTRIB_SOURCE_DIR"
+echo " OpenCV Source Path: $OPENCV_SOURCE_DIR"
+echo " OpenCV Contrib Source Path: $OPENCV_CONTRIB_SOURCE_DIR"
 echo " OpenCV binaries will be installed in: $INSTALL_DIR"
 echo " OpenCV pkgconfig path: $OPENCV_PKG_PATH"
 echo " OpenCV cmake path: $OPENCV_CMAKE_PATH"
