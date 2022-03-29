@@ -5,14 +5,21 @@ echo "Build and install OpenCV in MacOS."
 INSTALL_DIR=/opt/opencv/build
 CMAKE_INSTALL_PREFIX=$INSTALL_DIR
 
-PYTHON3_EXECUTABLE=/Users/lee/miniforge3/envs/torch/bin/python3
-OPENCV_SOURCE_DIR=/Users/lee/Desktop/github_download/opencv/opencv_4.x
-OPENCV_CONTRIB_SOURCE_DIR=/Users/lee/Desktop/github_download/opencv/opencv_contrib_4.x/modules
+HOME=/home/ubuntu
+
+PYTHON3_EXECUTABLE=$HOME/anaconda3/envs/opencv/bin/python3
+OPENCV_SOURCE_DIR=$HOME/opencv4.x/opencv
+OPENCV_CONTRIB_SOURCE_DIR=$HOME/opencv4.x/opencv_contrib/modules
 OPENCV_PKG_PATH=${INSTALL_DIR}/lib/pkgconfig/opencv.pc
 
+# GStreamer support
+echo "Install GStream..."
+sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev 
+echo "Install GStream done."
+
 echo "Build configuration: "
-echo " OpenCV Source will be installed in: $OPENCV_SOURCE_DIR"
-echo " OpenCV Contrib Source will be installed in: $OPENCV_CONTRIB_SOURCE_DIR"
+echo " OpenCV Source Path: $OPENCV_SOURCE_DIR"
+echo " OpenCV Contrib Path: $OPENCV_CONTRIB_SOURCE_DIR"
 echo " OpenCV binaries will be installed in: $INSTALL_DIR"
 echo " OpenCV pkgconfig path: $OPENCV_PKG_PATH"
 echo " Python3 executable: $PYTHON3_EXECUTABLE"
@@ -20,6 +27,7 @@ echo " Python3 executable: $PYTHON3_EXECUTABLE"
 cd $OPENCV_SOURCE_DIR
 mkdir build
 cd build
+
 
 function dependency(){
   sudo apt-add-repository universe
@@ -85,6 +93,11 @@ function run_cmake(){
   -D ENABLE_FAST_MATH=ON \
   -D WITH_LIBV4L=ON \
   -D WITH_OPENGL=ON \
+  -D WITH_CUDA=ON \
+  -D WITH_CUBLAS=ON \
+  -D WITH_GSTREAMER=ON \
+  -D WITH_GSTREAMER_0_10=OFF \
+  -D CUDA_NVCC_FLAGS="--expt-relaxed-constexpr" \
   ../
 
   if [ $? -eq 0 ] ; then
@@ -97,7 +110,7 @@ function run_cmake(){
 }
 
 function make_opencv(){
-  NUM_CPU=8
+  NUM_CPU=16
   echo "NUM_CPU: $NUM_CPU"
 
   time make -j$($NUM_CPU)
@@ -133,7 +146,8 @@ function make_install(){
   fi
 }
 
-run_cmake
+# dependency
+# run_cmake
 make_opencv
 make_install
 
