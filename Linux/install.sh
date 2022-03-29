@@ -11,6 +11,7 @@ PYTHON3_EXECUTABLE=$HOME/anaconda3/envs/opencv/bin/python3
 OPENCV_SOURCE_DIR=$HOME/opencv4.x/opencv
 OPENCV_CONTRIB_SOURCE_DIR=$HOME/opencv4.x/opencv_contrib/modules
 OPENCV_PKG_PATH=${INSTALL_DIR}/lib/pkgconfig/opencv.pc
+OPENCV_CMAKE_PATH=${INSTALL_DIR}/lib/cmake/opencv4
 
 # GStreamer support
 echo "Install GStream..."
@@ -28,6 +29,7 @@ echo " OpenCV Source Path: $OPENCV_SOURCE_DIR"
 echo " OpenCV Contrib Path: $OPENCV_CONTRIB_SOURCE_DIR"
 echo " OpenCV binaries will be installed in: $INSTALL_DIR"
 echo " OpenCV pkgconfig path: $OPENCV_PKG_PATH"
+echo " OpenCV cmake path: $OPENCV_CMAKE_PATH"
 echo " CUDA BIN: $ARCH_BIN"
 echo " Python3 executable: $PYTHON3_EXECUTABLE"
 
@@ -79,8 +81,116 @@ function dependency(){
 
 
 }
+#NO CUDA
+#NO GStream
+function run_cmake_Norm(){
+  time cmake \
+  -D CMAKE_BUILD_TYPE=RELEASE \
+  -D OPENCV_GENERATE_PKGCONFIG=ON \
+  -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
+  -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
+  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
+  -D INSTALL_C_EXAMPLES=OFF \
+  -D INSTALL_PYTHON_EXAMPLES=ON \
+  -D BUILD_NEW_PYTHON_SUPPORT=ON \
+  -D BUILD_opencv_python3=ON \
+  -D ENABLE_FAST_MATH=ON \
+  -D BUILD_EXAMPLES=ON \
+  -D BUILD_TESTS=OFF \
+  -D BUILD_PREF_TESTS=OFF \
+  -D WITH_IPP=OFF \
+  -D WITH_TBB=OFF \
+  -D WITH_OPENJPEG=OFF \
+  -D WITH_LIBV4L=ON \
+  -D WITH_V4L=ON \
+  -D WITH_OPENGL=ON \
+  -D OPENCV_ENABLE_NONFREE=ON \
+  ../
 
-function run_cmake(){
+  if [ $? -eq 0 ] ; then
+    echo "CMake configuration make successful without CUDA and GStream."
+  else
+    echo "CMake issues " >&2
+    echo "Please check the configuration being used"
+    exit 1
+  fi
+}
+
+function run_cmake_CUDA(){
+  time cmake \
+  -D CMAKE_BUILD_TYPE=RELEASE \
+  -D OPENCV_GENERATE_PKGCONFIG=ON \
+  -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
+  -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
+  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
+  -D INSTALL_C_EXAMPLES=OFF \
+  -D INSTALL_PYTHON_EXAMPLES=ON \
+  -D BUILD_NEW_PYTHON_SUPPORT=ON \
+  -D BUILD_opencv_python3=ON \
+  -D ENABLE_FAST_MATH=ON \
+  -D BUILD_EXAMPLES=ON \
+  -D BUILD_TESTS=OFF \
+  -D BUILD_PREF_TESTS=OFF \
+  -D CUDA_ARCH_BIN=$ARCH_BIN \
+  -D CUDA_ARCH_PTX="" \
+  -D CUDA_FAST_MATH=ON \
+  -D WITH_CUDA=ON \
+  -D WITH_CUBLAS=ON \
+  -D WITH_NVCUVID=OFF \
+  -D WITH_IPP=OFF \
+  -D WITH_TBB=OFF \
+  -D WITH_OPENJPEG=OFF \
+  -D WITH_LIBV4L=ON \
+  -D WITH_V4L=ON \
+  -D WITH_OPENGL=ON \
+  -D OPENCV_ENABLE_NONFREE=ON \
+  ../
+
+  if [ $? -eq 0 ] ; then
+    echo "CMake configuration make successful"
+  else
+    echo "CMake issues " >&2
+    echo "Please check the configuration being used"
+    exit 1
+  fi
+}
+
+function run_cmake_GStream(){
+  time cmake \
+  -D CMAKE_BUILD_TYPE=RELEASE \
+  -D OPENCV_GENERATE_PKGCONFIG=ON \
+  -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
+  -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
+  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
+  -D INSTALL_C_EXAMPLES=OFF \
+  -D INSTALL_PYTHON_EXAMPLES=ON \
+  -D BUILD_NEW_PYTHON_SUPPORT=ON \
+  -D BUILD_opencv_python3=ON \
+  -D ENABLE_FAST_MATH=ON \
+  -D BUILD_EXAMPLES=ON \
+  -D BUILD_TESTS=OFF \
+  -D BUILD_PREF_TESTS=OFF \
+  -D WITH_IPP=OFF \
+  -D WITH_TBB=OFF \
+  -D WITH_OPENJPEG=OFF \
+  -D WITH_LIBV4L=ON \
+  -D WITH_V4L=ON \
+  -D WITH_OPENGL=ON \
+  -D WITH_GSTREAMER=ON \
+  -D WITH_GSTREAMER_0_10=OFF \
+  -D OPENCV_ENABLE_NONFREE=ON \
+  ../
+
+  if [ $? -eq 0 ] ; then
+    echo "CMake configuration make successful with GStream."
+  else
+    echo "CMake issues " >&2
+    echo "Please check the configuration being used"
+    exit 1
+  fi
+}
+
+function run_cmake_CUDA_GStream(){
   time cmake \
   -D CMAKE_BUILD_TYPE=RELEASE \
   -D OPENCV_GENERATE_PKGCONFIG=ON \
@@ -113,7 +223,7 @@ function run_cmake(){
   ../
 
   if [ $? -eq 0 ] ; then
-    echo "CMake configuration make successful"
+    echo "CMake configuration make successful with CUDA And GStream"
   else
     echo "CMake issues " >&2
     echo "Please check the configuration being used"
@@ -121,9 +231,10 @@ function run_cmake(){
   fi
 }
 
+
+
 function make_opencv(){
-  NUM_CPU=$(nproc)
-  
+  NUM_CPU=16
   echo "NUM_CPU: $NUM_CPU"
   
   time make -j$NUM_CPU
@@ -160,7 +271,9 @@ function make_install(){
 }
 
 # dependency
-run_cmake
+# run_cmake_Norm
+# run_cmake_GStream
+run_cmake_CUDA
 make_opencv
 make_install
 

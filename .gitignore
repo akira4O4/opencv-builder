@@ -3,3 +3,4 @@ src/opencv_example/build
 src/.DS_Store
 Jetson/buildOpenCVXavier.sh
 Jetson/jetsonParams.sh
+src/opencv_cuda/build/
