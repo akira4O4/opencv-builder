@@ -17,11 +17,18 @@ echo "Install GStream..."
 sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev 
 echo "Install GStream done."
 
+#Run this:
+#cd /usr/local/cuda/samples/1_Utilities/deviceQuery
+#sudo make
+#./deviceQuery
+
+ARCH_BIN=7.2
 echo "Build configuration: "
 echo " OpenCV Source Path: $OPENCV_SOURCE_DIR"
 echo " OpenCV Contrib Path: $OPENCV_CONTRIB_SOURCE_DIR"
 echo " OpenCV binaries will be installed in: $INSTALL_DIR"
 echo " OpenCV pkgconfig path: $OPENCV_PKG_PATH"
+echo " CUDA BIN: $ARCH_BIN"
 echo " Python3 executable: $PYTHON3_EXECUTABLE"
 
 cd $OPENCV_SOURCE_DIR
@@ -84,22 +91,25 @@ function run_cmake(){
   -D INSTALL_PYTHON_EXAMPLES=ON \
   -D BUILD_NEW_PYTHON_SUPPORT=ON \
   -D BUILD_opencv_python3=ON \
-  -D OPENCV_ENABLE_NONFREE=ON \
   -D ENABLE_FAST_MATH=ON \
+  -D BUILD_EXAMPLES=ON \
+  -D BUILD_TESTS=OFF \
+  -D BUILD_PREF_TESTS=OFF \
+  -D CUDA_ARCH_BIN=$ARCH_BIN \
+  -D CUDA_ARCH_PTX="" \
+  -D CUDA_FAST_MATH=ON \
+  -D WITH_CUDA=ON \
+  -D WITH_CUBLAS=ON \
+  -D WITH_NVCUVID=OFF \
+  -D WITH_IPP=OFF \
+  -D WITH_TBB=ON \
   -D WITH_OPENJPEG=OFF \
   -D WITH_LIBV4L=ON \
   -D WITH_V4L=ON \
   -D WITH_OPENGL=ON \
-  -D BUILD_EXAMPLES=ON \
-  -D BUILD_TESTS=OFF \
-  -D BUILD_PREF_TESTS=OFF \
   -D WITH_GSTREAMER=ON \
   -D WITH_GSTREAMER_0_10=OFF \
-  -D WITH_CUDA=ON \
-  -D WITH_CUBLAS=ON \
-  -D CUDA_NVCC_FLAGS="--expt-relaxed-constexpr" \
-  -D WITH_IPP=OFF \
-  -D WITH_TBB=ON \
+  -D OPENCV_ENABLE_NONFREE=ON \
   ../
 
   if [ $? -eq 0 ] ; then
