@@ -7,13 +7,16 @@ CMAKE_INSTALL_PREFIX=$INSTALL_DIR
 
 HOME=/home/ubuntu
 
-PYTHON3_EXECUTABLE=$HOME/anaconda3/envs/opencv/bin/python3
+PYTHON3_EXECUTABLE=$HOME/anaconda3/envs/opencv/bin/python
 OPENCV_SOURCE_DIR=$HOME/opencv4.x/opencv
 OPENCV_CONTRIB_SOURCE_DIR=$HOME/opencv4.x/opencv_contrib/modules
 OPENCV_PKG_PATH=${INSTALL_DIR}/lib/pkgconfig/opencv.pc
 OPENCV_CMAKE_PATH=${INSTALL_DIR}/lib/cmake/opencv4
 
-# GStreamer support
+echo "Install python3 dependency..."
+sudo apt-get install -y python3-dev python3-numpy python3-py python3-pytest
+echo "Install python3 dependency done."
+
 echo "Install GStream..."
 sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev 
 echo "Install GStream done."
@@ -81,6 +84,7 @@ function dependency(){
 
 
 }
+
 #NO CUDA
 #NO GStream
 function run_cmake_Norm(){
@@ -93,6 +97,7 @@ function run_cmake_Norm(){
   -D INSTALL_C_EXAMPLES=OFF \
   -D INSTALL_PYTHON_EXAMPLES=ON \
   -D BUILD_NEW_PYTHON_SUPPORT=ON \
+  -D BUILD_opencv_python2=OFF \
   -D BUILD_opencv_python3=ON \
   -D ENABLE_FAST_MATH=ON \
   -D BUILD_EXAMPLES=ON \
@@ -260,7 +265,7 @@ function make_opencv(){
 }
 
 function make_install(){
-    echo "Installing ... "
+  echo "Installing ... "
   sudo make install
   if [ $? -eq 0 ] ; then
     echo "OpenCV installed in: $CMAKE_INSTALL_PREFIX"
@@ -273,7 +278,8 @@ function make_install(){
 # dependency
 # run_cmake_Norm
 # run_cmake_GStream
-run_cmake_CUDA
+# run_cmake_CUDA
+run_cmake_CUDA_GStream
 make_opencv
 make_install
 

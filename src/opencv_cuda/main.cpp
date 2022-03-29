@@ -6,6 +6,7 @@ returns -1.
 #include <iostream>
 #include "opencv2/core.hpp"
 #include "opencv2/cudaarithm.hpp"
+#include<opencv2/cudaimgproc.hpp>
 using namespace std;
 using namespace cv;
 using namespace cv::cuda;

@@ -18,6 +18,15 @@ echo " OpenCV binaries will be installed in: $INSTALL_DIR"
 echo " OpenCV pkgconfig path: $OPENCV_PKG_PATH"
 echo " Python3 executable: $PYTHON3_EXECUTABLE"
 
+
+echo "Install python3 dependency..."
+sudo apt-get install -y python3-dev python3-numpy python3-py python3-pytest
+echo "Install python3 dependency done."
+
+echo "Install GStream..."
+sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev 
+echo "Install GStream done."
+
 cd $OPENCV_SOURCE_DIR
 mkdir build
 cd build

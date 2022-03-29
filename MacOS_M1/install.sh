@@ -21,8 +21,13 @@ echo " OpenCV pkgconfig path: $OPENCV_PKG_PATH"
 echo " OpenCV cmake path: $OPENCV_CMAKE_PATH"
 echo " Python3 executable: $PYTHON3_EXECUTABLE"
 
+echo "Install python3 dependency..."
+brew install python3-dev python3-numpy python3-py python3-pytest
+echo "Install python3 dependency done."
+
+
 cd $OPENCV_SOURCE_DIR
-# mkdir build
+mkdir build
 cd build
 
 function run_cmake(){
