@@ -38,7 +38,7 @@ function run_cmake(){
   -D BUILD_opencv_python3=ON \
   -D WITH_OPENJPEG=OFF \
   -D WITH_IPP=OFF \
-  -D WITH_TBB=ON \
+  -D WITH_TBB=OFF \
   -D INSTALL_C_EXAMPLES=OFF \
   -D OPENCV_ENABLE_NONFREE=ON \
   -D BUILD_EXAMPLES=ON \

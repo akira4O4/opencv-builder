@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Build and install OpenCV in MacOS."
+echo "Build and install OpenCV in Linux."
 
 INSTALL_DIR=/opt/opencv/build
 CMAKE_INSTALL_PREFIX=$INSTALL_DIR
@@ -17,11 +17,18 @@ echo "Install GStream..."
 sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev 
 echo "Install GStream done."
 
+#Run this:
+#cd /usr/local/cuda/samples/1_Utilities/deviceQuery
+#sudo make
+#./deviceQuery
+
+ARCH_BIN=7.2
 echo "Build configuration: "
 echo " OpenCV Source Path: $OPENCV_SOURCE_DIR"
 echo " OpenCV Contrib Path: $OPENCV_CONTRIB_SOURCE_DIR"
 echo " OpenCV binaries will be installed in: $INSTALL_DIR"
 echo " OpenCV pkgconfig path: $OPENCV_PKG_PATH"
+echo " CUDA BIN: $ARCH_BIN"
 echo " Python3 executable: $PYTHON3_EXECUTABLE"
 
 cd $OPENCV_SOURCE_DIR
@@ -76,28 +83,33 @@ function dependency(){
 function run_cmake(){
   time cmake \
   -D CMAKE_BUILD_TYPE=RELEASE \
-  -D CMAKE_OSX_ARCHITECTURES=arm64 \
-  -D CMAKE_SYSTEM_PROCESSOR=arm64 \
   -D OPENCV_GENERATE_PKGCONFIG=ON \
   -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
   -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
   -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
-  -D INSTALL_PYTHON_EXAMPLES=ON \
-  -D BUILD_opencv_python3=ON \
-  -D WITH_OPENJPEG=OFF \
-  -D WITH_IPP=OFF \
-  -D WITH_TBB=ON \
   -D INSTALL_C_EXAMPLES=OFF \
-  -D OPENCV_ENABLE_NONFREE=ON \
-  -D BUILD_EXAMPLES=ON \
+  -D INSTALL_PYTHON_EXAMPLES=ON \
+  -D BUILD_NEW_PYTHON_SUPPORT=ON \
+  -D BUILD_opencv_python3=ON \
   -D ENABLE_FAST_MATH=ON \
-  -D WITH_LIBV4L=ON \
-  -D WITH_OPENGL=ON \
+  -D BUILD_EXAMPLES=ON \
+  -D BUILD_TESTS=OFF \
+  -D BUILD_PREF_TESTS=OFF \
+  -D CUDA_ARCH_BIN=$ARCH_BIN \
+  -D CUDA_ARCH_PTX="" \
+  -D CUDA_FAST_MATH=ON \
   -D WITH_CUDA=ON \
   -D WITH_CUBLAS=ON \
+  -D WITH_NVCUVID=OFF \
+  -D WITH_IPP=OFF \
+  -D WITH_TBB=OFF \
+  -D WITH_OPENJPEG=OFF \
+  -D WITH_LIBV4L=ON \
+  -D WITH_V4L=ON \
+  -D WITH_OPENGL=ON \
   -D WITH_GSTREAMER=ON \
   -D WITH_GSTREAMER_0_10=OFF \
-  -D CUDA_NVCC_FLAGS="--expt-relaxed-constexpr" \
+  -D OPENCV_ENABLE_NONFREE=ON \
   ../
 
   if [ $? -eq 0 ] ; then
@@ -110,10 +122,11 @@ function run_cmake(){
 }
 
 function make_opencv(){
-  NUM_CPU=16
+  NUM_CPU=$(nproc)
+  
   echo "NUM_CPU: $NUM_CPU"
-
-  time make -j$($NUM_CPU)
+  
+  time make -j$NUM_CPU
 
   if [ $? -eq 0 ] ; then
     echo "OpenCV make successful"
@@ -147,7 +160,7 @@ function make_install(){
 }
 
 # dependency
-# run_cmake
+run_cmake
 make_opencv
 make_install
 

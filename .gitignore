@@ -1,3 +1,5 @@
 
 src/opencv_example/build
 src/.DS_Store
+Jetson/buildOpenCVXavier.sh
+Jetson/jetsonParams.sh
