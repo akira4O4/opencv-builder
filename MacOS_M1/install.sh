@@ -2,12 +2,14 @@
 
 echo "Build and install OpenCV in MacOS."
 
+HOME=/Users/lee
+
 INSTALL_DIR=/opt/opencv/build
 CMAKE_INSTALL_PREFIX=$INSTALL_DIR
 
-PYTHON3_EXECUTABLE=/Users/lee/miniforge3/envs/torch/bin/python3
-OPENCV_SOURCE_DIR=/Users/lee/Desktop/github_download/opencv/opencv_4.x
-OPENCV_CONTRIB_SOURCE_DIR=/Users/lee/Desktop/github_download/opencv/opencv_contrib_4.x/modules
+PYTHON3_EXECUTABLE=$HOME/miniforge3/envs/torch/bin/python3
+OPENCV_SOURCE_DIR=$HOME/Desktop/github_download/opencv/opencv_4.x
+OPENCV_CONTRIB_SOURCE_DIR=$HOME/Desktop/github_download/opencv/opencv_contrib_4.x/modules
 OPENCV_PKG_PATH=${INSTALL_DIR}/lib/pkgconfig/opencv.pc
 OPENCV_CMAKE_PATH=${INSTALL_DIR}/lib/cmake/opencv4
 
