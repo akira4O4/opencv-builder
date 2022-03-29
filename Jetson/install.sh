@@ -247,9 +247,9 @@ function run_cmake(){
   -D CUDA_NVCC_FLAGS="--expt-relaxed-constexpr" \
   -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
   -D BUILD_opencv_python3=ON \
-  -D WITH_TBB=ON \
-  -D WITH_IPP=OFF \
   -D ENABLE_FAST_MATH=ON \
+  -D WITH_TBB=OFF \
+  -D WITH_IPP=OFF \
   -D WITH_LIBV4L=ON \
   -D WITH_OPENGL=ON \
   -D WITH_CUBLAS=ON \

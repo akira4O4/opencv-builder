@@ -102,7 +102,7 @@ function run_cmake(){
   -D WITH_CUBLAS=ON \
   -D WITH_NVCUVID=OFF \
   -D WITH_IPP=OFF \
-  -D WITH_TBB=ON \
+  -D WITH_TBB=OFF \
   -D WITH_OPENJPEG=OFF \
   -D WITH_LIBV4L=ON \
   -D WITH_V4L=ON \
