@@ -1,14 +1,14 @@
-此项目提供了3个编译脚本用于在linux，jetson，macos M1上进行opencv的编译和安装.
+此项目提供了3个编译脚本用于在linux，jetson，macos M1上进行opencv的编译和安装.  
 
-在jetson和linux的OpenCV编译中提供了CUDA和GStream支持，其中MacOS M1不支持CUDA和GStream。
+在jetson和linux的OpenCV编译中提供了CUDA和GStream支持，其中MacOS M1不支持CUDA和GStream。  
 
-编译opencv完成后生产相对于的python—opencv模块。
+编译opencv完成后生产相对于的python—opencv模块。  
 
-同时提供了c++和python的gstream程序和opencv测试程序。
+同时提供了c++和python的gstream程序和opencv测试程序。  
 
 
 
-在所有的编译脚本中提供了四个配置参数：
+在所有的编译脚本中提供了四个配置参数：  
 
 1. INSTALL_DIR：库文件安装路径
 
@@ -20,11 +20,9 @@
 
 
 
-## 使用
+运行对应平台的install.sh脚本，脚本将会自动进行opencv的cmake make和install安装。  
 
-运行对应平台的install.sh脚本，脚本将会自动进行opencv的cmake make和install安装。
-
-
+## 
 
 ## 配置路径
 
@@ -34,9 +32,9 @@
 
 - export LD_LIBRARY_PATH=$INSTALL_DIR/lib:\$LD_LIBRARY_PATH
 
-- export PATH=$OPENCV_CMAKE_PATH:\$PATH
+- export PATH=$OPENCV_CMAKE_PATH:\$PATH  
 
-
+  
 
 执行一下命令完成python-opencv模块的配置
 
@@ -46,21 +44,38 @@ sudo cp 库安装目录/lib/python3.8/site-packages/cv2/python-3.8/cv.python-38-
 
 ## 
 
+## 使用
+
+反注释掉shell函数，然后执行脚本进行编译，其中的make_opencv函数中的NUM_CPU参数根据自己的电脑CPU核心数进行修改。  
+
+如linux/install.sh脚本：  
+
+```shell
+# dependency #安装下载依赖
+# run_cmake_Norm #原始OpenCV cmake编译
+# run_cmake_GStream #带GStream的cmake编译
+# run_cmake_CUDA #带CUDA的cmake编译
+
+run_cmake_CUDA_GStream #执行带CUDA GStream的cmake编译
+make_opencv #make编译
+make_install #make install 安装，安装动态库头文件到INSTALL_DIR路径下
+```
+
+## 
+
 ## 测试
 
 ### OpenCV测试
 
-正常的测试结果为打开本地摄像头。
-
-
+正常的测试结果为打开本地摄像头。  
 
 ### Gstream测试
 
-正常的测试结果为拉取网络rtsp流进行解码并使用opencv进行播放。
+正常的测试结果为拉取网络rtsp流进行解码并使用opencv进行播放。  
 
-在MacOS M1中没有Gstream框架，所有在并不能运行对于的c++或者python测试程序，在linux和jetson中可以正常运行测试。
+在MacOS M1中没有Gstream框架，所有在并不能运行对于的c++或者python测试程序，在linux和jetson中可以正常运行测试。  
 
-执行以下命令完成c++程序测试：
+执行以下命令完成c++程序测试：  
 
 ```bash
 mkdir build
@@ -70,7 +85,7 @@ make
 ./main
 ```
 
-执行以下命令完成python程序测试：
+执行以下命令完成python程序测试：  
 
 ```bash
 python main.py
