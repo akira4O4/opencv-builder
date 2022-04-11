@@ -7,7 +7,7 @@ HOME=/Users/lee
 INSTALL_DIR=/opt/opencv/build
 CMAKE_INSTALL_PREFIX=$INSTALL_DIR
 
-PYTHON3_EXECUTABLE=$HOME/miniforge3/envs/torch/bin/python3
+# PYTHON3_EXECUTABLE=$HOME/miniforge3/envs/torch/bin/python3
 OPENCV_SOURCE_DIR=$HOME/Desktop/github_download/opencv/opencv_4.x
 OPENCV_CONTRIB_SOURCE_DIR=$HOME/Desktop/github_download/opencv/opencv_contrib_4.x/modules
 OPENCV_PKG_PATH=${INSTALL_DIR}/lib/pkgconfig/opencv.pc
@@ -38,7 +38,10 @@ function run_cmake(){
   -D OPENCV_GENERATE_PKGCONFIG=ON \
   -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
   -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
-  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
+  -D PYTHON_DEFAULT_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_NUMPY_INCLUDE_DIRS=$(python -c "import numpy; print (numpy.get_include())") \
+  -D PYTHON3_PACKAGES_PATH=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") \
   -D INSTALL_PYTHON_EXAMPLES=ON \
   -D BUILD_opencv_python3=ON \
   -D WITH_OPENJPEG=OFF \
@@ -60,6 +63,8 @@ function run_cmake(){
     exit 1
   fi
 }
+
+sleep 2
 
 function make_opencv(){
   NUM_CPU=8

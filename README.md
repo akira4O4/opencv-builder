@@ -12,15 +12,19 @@
 
 1. INSTALL_DIR：库文件安装路径
 
-2. PYTHON3_EXECUTABLE：python解释权路径
+<!-- 2. PYTHON3_EXECUTABLE：python解释权路径  废弃-->
 
-3. OPENCV_SOURCE_DIR：opencv源码路径
+2. OPENCV_SOURCE_DIR：opencv源码路径
 
-4. OPENCV_CONTRIB_SOURCE_DIR：opencv contirb库源码路径
+3. OPENCV_CONTRIB_SOURCE_DIR：opencv contirb库源码路径
 
 
 
-运行对应平台的install.sh脚本，脚本将会自动进行opencv的cmake make和install安装。  
+## 使用
+其中对于编译python的部分要注意，python环境，可以手动切换环境，或者修改编译脚本中的python解释器路径：$(xxx/xxx/python -c)
+
+运行对应平台的install.sh脚本，脚本将会自动进行opencv的cmake make和install安装。
+
 
 ## 
 
