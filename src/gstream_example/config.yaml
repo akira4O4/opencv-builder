@@ -1,0 +1,53 @@
+gst_decode:
+  File: 'filesrc location="{}" ! 
+  oggdemux name=demux ! queue ! vorbisdec ! autoaudiosink demux. !queue ! theoradec !
+  videoconvert ! appsink'
+
+  RTSP_H264: 'rtspsrc latency=20 location="{}" ! 
+  rtph264depay ! h264parse ! avdec_h264 ! 
+  videoconvert ! appsink'
+
+  RTSP_H265: 'rtspsrc latency=20 location="{}" ! 
+  rtph265depay ! h265parse ! avdec_h265 ! 
+  videoconvert ! appsink'
+
+  # 只有当程序位于AI盒子内部时候，才能使用带NV开头的解码命令.
+  NV_RTSP_H264: 'rtspsrc latency=20 location={} ! 
+  application/x-rtp,encodeing-name=H264 ! 
+  rtph264depay ! h264parse ! omxh264dec ! 
+  nveglglessink'
+
+  NV_RTSP_H265: 'rtspsrc latency=20 location={} ! 
+  application/x-rtp,encodeing-name=H265 ! 
+  rtph265depay ! h265parse ! omxh265dec ! 
+  nvoverlaysink'
+
+  #   Not to debug
+  NV_VP8: 'filesrc location={} ! 
+  qtdemux name=demux demux.video_0 ! queue ! omxvp8dec ! 
+  nvoverlaysink'
+
+  #   Not to debug
+  NV_VP9: 'filesrc location={} ! 
+  matroskademux name=demux demux.video_0 ! queue ! omxvp9dec ! 
+  nvoverlaysink'
+
+  NV_MPEG4: 'filesrc location={} ! 
+  qtdemux name=demux demux.video_0 ! queue ! mpeg4videoparse ! 
+  omxmpeg4videodec ! nveglglessink'
+
+  NV_V4L2_H264: 'filesrc location={} !
+  qtdemux ! h264parse ! nvv4l2decoder !
+  nvoverlaysink'
+
+  NV_V4L2_H265: 'filesrc location={} !
+  qtdemux ! h265parse ! nvv4l2decoder !
+  nvoverlaysink'
+  
+  NV_V4L2_VP8: 'filesrc location={} ! 
+  matroskademux ! nvv4l2decoder ! 
+  nvoverlaysink'
+
+  NV_V4L2_VP9: 'filesrc location={} ! 
+  matroskademux ! nvv3l2decoder ! 
+  nvoverlaysink'

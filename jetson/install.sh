@@ -244,26 +244,108 @@ function dependency(){
 #   fi
 # }
 
-function run_cmake(){
+#NO CUDA
+#NO GStream
+function run_cmake_Norm(){
   time cmake \
   -D CMAKE_BUILD_TYPE=RELEASE \
   -D OPENCV_GENERATE_PKGCONFIG=ON \
   -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
   -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
-  -D CUDA_ARCH_BIN=${ARCH_BIN} \
+  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
+  -D INSTALL_C_EXAMPLES=OFF \
+  -D INSTALL_PYTHON_EXAMPLES=ON \
+  -D BUILD_NEW_PYTHON_SUPPORT=ON \
+  -D BUILD_opencv_python2=OFF \
+  -D BUILD_opencv_python3=ON \
+  -D ENABLE_FAST_MATH=ON \
+  -D BUILD_EXAMPLES=ON \
+  -D BUILD_TESTS=OFF \
+  -D BUILD_PREF_TESTS=OFF \
+  -D WITH_IPP=OFF \
+  -D WITH_TBB=OFF \
+  -D WITH_OPENJPEG=OFF \
+  -D WITH_LIBV4L=ON \
+  -D WITH_V4L=ON \
+  -D WITH_OPENGL=ON \
+  -D OPENCV_ENABLE_NONFREE=ON \
+  ../
+
+  if [ $? -eq 0 ] ; then
+    echo "CMake configuration make successful without CUDA and GStream."
+  else
+    echo "CMake issues " >&2
+    echo "Please check the configuration being used"
+    exit 1
+  fi
+}
+
+
+function run_cmake_GStream(){
+  time cmake \
+  -D CMAKE_BUILD_TYPE=RELEASE \
+  -D OPENCV_GENERATE_PKGCONFIG=ON \
+  -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
+  -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
+  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
+  -D INSTALL_C_EXAMPLES=OFF \
+  -D INSTALL_PYTHON_EXAMPLES=ON \
+  -D BUILD_NEW_PYTHON_SUPPORT=ON \
+  -D BUILD_opencv_python3=ON \
+  -D ENABLE_FAST_MATH=ON \
+  -D BUILD_EXAMPLES=ON \
+  -D BUILD_TESTS=OFF \
+  -D BUILD_PREF_TESTS=OFF \
+  -D WITH_IPP=OFF \
+  -D WITH_TBB=OFF \
+  -D WITH_OPENJPEG=OFF \
+  -D WITH_LIBV4L=ON \
+  -D WITH_V4L=ON \
+  -D WITH_OPENGL=ON \
+  -D WITH_GSTREAMER=ON \
+  -D WITH_GSTREAMER_0_10=OFF \
+  -D OPENCV_ENABLE_NONFREE=ON \
+  ../
+
+  if [ $? -eq 0 ] ; then
+    echo "CMake configuration make successful with GStream."
+  else
+    echo "CMake issues " >&2
+    echo "Please check the configuration being used"
+    exit 1
+  fi
+}
+
+
+function run_cmake_CUDA(){
+  time cmake \
+  -D CMAKE_BUILD_TYPE=RELEASE \
+  -D OPENCV_GENERATE_PKGCONFIG=ON \
+  -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
+  -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
+  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
+  -D INSTALL_C_EXAMPLES=OFF \
+  -D INSTALL_PYTHON_EXAMPLES=ON \
+  -D BUILD_NEW_PYTHON_SUPPORT=ON \
+  -D BUILD_opencv_python3=ON \
+  -D ENABLE_FAST_MATH=ON \
+  -D BUILD_EXAMPLES=ON \
+  -D BUILD_TESTS=OFF \
+  -D BUILD_PREF_TESTS=OFF \
+  -D CUDA_ARCH_BIN=$ARCH_BIN \
   -D CUDA_ARCH_PTX="" \
   -D CUDA_FAST_MATH=ON \
   -D CUDA_NVCC_FLAGS="--expt-relaxed-constexpr" \
-  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
-  -D BUILD_opencv_python3=ON \
-  -D ENABLE_FAST_MATH=ON \
-  -D WITH_TBB=OFF \
-  -D WITH_IPP=OFF \
-  -D WITH_LIBV4L=ON \
-  -D WITH_OPENGL=ON \
+  -D WITH_CUDA=ON \
   -D WITH_CUBLAS=ON \
-  -D WITH_GSTREAMER=ON \
-  -D WITH_GSTREAMER_0_10=OFF \
+  -D WITH_NVCUVID=OFF \
+  -D WITH_IPP=OFF \
+  -D WITH_TBB=OFF \
+  -D WITH_OPENJPEG=OFF \
+  -D WITH_LIBV4L=ON \
+  -D WITH_V4L=ON \
+  -D WITH_OPENGL=ON \
+  -D OPENCV_ENABLE_NONFREE=ON \
   ../
 
   if [ $? -eq 0 ] ; then
@@ -274,6 +356,45 @@ function run_cmake(){
     exit 1
   fi
 }
+
+
+function run_cmake(){
+  time cmake \
+  -D CMAKE_BUILD_TYPE=RELEASE \
+  -D OPENCV_GENERATE_PKGCONFIG=ON \
+  -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
+  -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
+  -D CUDA_ARCH_BIN=${ARCH_BIN} \
+  -D CUDA_ARCH_PTX="" \
+  -D CUDA_FAST_MATH=ON \
+  -D CUDA_NVCC_FLAGS="--expt-relaxed-constexpr" \
+  -D WITH_CUBLAS=ON \
+  -D WITH_CUDA=ON \
+  -D WITH_NVCUVID=ON \
+  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
+  -D BUILD_opencv_python3=ON \
+  -D BUILD_NEW_PYTHON_SUPPORT=ON \
+  -D INSTALL_C_EXAMPLES=OFF \
+  -D INSTALL_PYTHON_EXAMPLES=ON \
+  -D ENABLE_FAST_MATH=ON \
+  -D WITH_TBB=OFF \
+  -D WITH_IPP=OFF \
+  -D WITH_LIBV4L=ON \
+  -D WITH_OPENGL=ON \
+  -D WITH_GSTREAMER=ON \
+  -D WITH_GSTREAMER_0_10=OFF \
+  -D OPENCV_ENABLE_NONFREE=ON \
+  ../
+
+  if [ $? -eq 0 ] ; then
+    echo "CMake configuration make successful"
+  else
+    echo "CMake issues " >&2
+    echo "Please check the configuration being used"
+    exit 1
+  fi
+}
+
 function make_opencv(){
   NUM_CPU=$(nproc)
   echo "NUM_CPU: $NUM_CPU"

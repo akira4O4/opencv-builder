@@ -7,7 +7,7 @@ CMAKE_INSTALL_PREFIX=$INSTALL_DIR
 
 HOME=/home/ubuntu
 
-PYTHON3_EXECUTABLE=$HOME/anaconda3/envs/opencv/bin/python
+PYTHON3_EXECUTABLE=$HOME/anaconda3/envs/torch/bin/python
 OPENCV_SOURCE_DIR=$HOME/opencv4.x/opencv
 OPENCV_CONTRIB_SOURCE_DIR=$HOME/opencv4.x/opencv_contrib/modules
 OPENCV_PKG_PATH=${INSTALL_DIR}/lib/pkgconfig/opencv.pc
