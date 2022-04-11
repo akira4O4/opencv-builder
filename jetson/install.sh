@@ -6,7 +6,7 @@ INSTALL_DIR=/opt/opencv4.x/build
 CMAKE_INSTALL_PREFIX=$INSTALL_DIR
 
 HOME=/home/nvidia/
-PYTHON3_EXECUTABLE=/usr/bin/python3
+# PYTHON3_EXECUTABLE=/usr/bin/python3
 OPENCV_SOURCE_DIR=$HOME/opencv4.x/opencv_4.x
 OPENCV_CONTRIB_SOURCE_DIR=$HOME/opencv4.x/opencv_contrib_4.x/modules
 OPENCV_PKG_PATH=${INSTALL_DIR}/lib/pkgconfig/opencv.pc
@@ -16,7 +16,7 @@ echo " OpenCV Source Path: $OPENCV_SOURCE_DIR"
 echo " OpenCV Contrib Path: $OPENCV_CONTRIB_SOURCE_DIR"
 echo " OpenCV binaries will be installed in: $INSTALL_DIR"
 echo " OpenCV pkgconfig path: $OPENCV_PKG_PATH"
-echo " Python3 executable: $PYTHON3_EXECUTABLE"
+# echo " Python3 executable: $PYTHON3_EXECUTABLE"
 
 
 echo "Install python3 dependency..."
@@ -207,43 +207,6 @@ function dependency(){
 }
 
 
-# function run_cmake(){
-#   time cmake \
-#   -D CMAKE_BUILD_TYPE=RELEASE \
-#   -D OPENCV_GENERATE_PKGCONFIG=ON \
-#   -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
-#   -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
-#   -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
-#   -D INSTALL_C_EXAMPLES=OFF \
-#   -D INSTALL_PYTHON_EXAMPLES=ON \
-#   -D BUILD_NEW_PYTHON_SUPPORT=ON \
-#   -D BUILD_opencv_python3=ON \
-#   -D BUILD_EXAMPLES=ON \
-#   -D WITH_OPENJPEG=OFF \
-#   -D WITH_IPP=OFF \
-#   -D WITH_TBB=ON \
-#   -D OPENCV_ENABLE_NONFREE=ON \
-#   -D ENABLE_FAST_MATH=ON \
-#   -D WITH_LIBV4L=ON \
-#   -D WITH_OPENGL=ON \
-#   -D CUDA_ARCH_BIN=${ARCH_BIN} \
-#   -D CUDA_ARCH_PTX="" \
-#   -D CUDA_FAST_MATH=ON \
-#   -D WITH_CUBLAS=ON \
-#   -D CUDA_NVCC_FLAGS="--expt-relaxed-constexpr" \
-#   -D WITH_GSTREAMER=ON \
-#   -D WITH_GSTREAMER_0_10=OFF \
-#   ../
-
-#   if [ $? -eq 0 ] ; then
-#     echo "CMake configuration make successful"
-#   else
-#     echo "CMake issues " >&2
-#     echo "Please check the configuration being used"
-#     exit 1
-#   fi
-# }
-
 #NO CUDA
 #NO GStream
 function run_cmake_Norm(){
@@ -252,7 +215,10 @@ function run_cmake_Norm(){
   -D OPENCV_GENERATE_PKGCONFIG=ON \
   -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
   -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
-  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
+  -D PYTHON_DEFAULT_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_NUMPY_INCLUDE_DIRS=$(python -c "import numpy; print (numpy.get_include())") \
+  -D PYTHON3_PACKAGES_PATH=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") \
   -D INSTALL_C_EXAMPLES=OFF \
   -D INSTALL_PYTHON_EXAMPLES=ON \
   -D BUILD_NEW_PYTHON_SUPPORT=ON \
@@ -287,7 +253,10 @@ function run_cmake_GStream(){
   -D OPENCV_GENERATE_PKGCONFIG=ON \
   -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
   -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
-  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
+  -D PYTHON_DEFAULT_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_NUMPY_INCLUDE_DIRS=$(python -c "import numpy; print (numpy.get_include())") \
+  -D PYTHON3_PACKAGES_PATH=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") \
   -D INSTALL_C_EXAMPLES=OFF \
   -D INSTALL_PYTHON_EXAMPLES=ON \
   -D BUILD_NEW_PYTHON_SUPPORT=ON \
@@ -323,7 +292,10 @@ function run_cmake_CUDA(){
   -D OPENCV_GENERATE_PKGCONFIG=ON \
   -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
   -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
-  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
+  -D PYTHON_DEFAULT_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_NUMPY_INCLUDE_DIRS=$(python -c "import numpy; print (numpy.get_include())") \
+  -D PYTHON3_PACKAGES_PATH=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") \
   -D INSTALL_C_EXAMPLES=OFF \
   -D INSTALL_PYTHON_EXAMPLES=ON \
   -D BUILD_NEW_PYTHON_SUPPORT=ON \
@@ -364,6 +336,10 @@ function run_cmake(){
   -D OPENCV_GENERATE_PKGCONFIG=ON \
   -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
   -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
+  -D PYTHON_DEFAULT_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_NUMPY_INCLUDE_DIRS=$(python -c "import numpy; print (numpy.get_include())") \
+  -D PYTHON3_PACKAGES_PATH=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") \
   -D CUDA_ARCH_BIN=${ARCH_BIN} \
   -D CUDA_ARCH_PTX="" \
   -D CUDA_FAST_MATH=ON \
@@ -371,7 +347,6 @@ function run_cmake(){
   -D WITH_CUBLAS=ON \
   -D WITH_CUDA=ON \
   -D WITH_NVCUVID=ON \
-  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
   -D BUILD_opencv_python3=ON \
   -D BUILD_NEW_PYTHON_SUPPORT=ON \
   -D INSTALL_C_EXAMPLES=OFF \

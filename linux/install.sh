@@ -7,7 +7,7 @@ CMAKE_INSTALL_PREFIX=$INSTALL_DIR
 
 HOME=/home/ubuntu
 
-PYTHON3_EXECUTABLE=$HOME/anaconda3/envs/torch/bin/python
+# PYTHON3_EXECUTABLE=$HOME/anaconda3/envs/torch/bin/python
 OPENCV_SOURCE_DIR=$HOME/opencv4.x/opencv
 OPENCV_CONTRIB_SOURCE_DIR=$HOME/opencv4.x/opencv_contrib/modules
 OPENCV_PKG_PATH=${INSTALL_DIR}/lib/pkgconfig/opencv.pc
@@ -34,7 +34,7 @@ echo " OpenCV binaries will be installed in: $INSTALL_DIR"
 echo " OpenCV pkgconfig path: $OPENCV_PKG_PATH"
 echo " OpenCV cmake path: $OPENCV_CMAKE_PATH"
 echo " CUDA BIN: $ARCH_BIN"
-echo " Python3 executable: $PYTHON3_EXECUTABLE"
+# echo " Python3 executable: $PYTHON3_EXECUTABLE"
 
 cd $OPENCV_SOURCE_DIR
 mkdir build
@@ -93,7 +93,10 @@ function run_cmake_Norm(){
   -D OPENCV_GENERATE_PKGCONFIG=ON \
   -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
   -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
-  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
+  -D PYTHON_DEFAULT_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_NUMPY_INCLUDE_DIRS=$(python -c "import numpy; print (numpy.get_include())") \
+  -D PYTHON3_PACKAGES_PATH=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") \
   -D INSTALL_C_EXAMPLES=OFF \
   -D INSTALL_PYTHON_EXAMPLES=ON \
   -D BUILD_NEW_PYTHON_SUPPORT=ON \
@@ -127,7 +130,10 @@ function run_cmake_CUDA(){
   -D OPENCV_GENERATE_PKGCONFIG=ON \
   -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
   -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
-  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
+  -D PYTHON_DEFAULT_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_NUMPY_INCLUDE_DIRS=$(python -c "import numpy; print (numpy.get_include())") \
+  -D PYTHON3_PACKAGES_PATH=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") \
   -D INSTALL_C_EXAMPLES=OFF \
   -D INSTALL_PYTHON_EXAMPLES=ON \
   -D BUILD_NEW_PYTHON_SUPPORT=ON \
@@ -166,7 +172,10 @@ function run_cmake_GStream(){
   -D OPENCV_GENERATE_PKGCONFIG=ON \
   -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
   -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
-  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
+  -D PYTHON_DEFAULT_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_NUMPY_INCLUDE_DIRS=$(python -c "import numpy; print (numpy.get_include())") \
+  -D PYTHON3_PACKAGES_PATH=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") \ 
   -D INSTALL_C_EXAMPLES=OFF \
   -D INSTALL_PYTHON_EXAMPLES=ON \
   -D BUILD_NEW_PYTHON_SUPPORT=ON \
@@ -201,7 +210,10 @@ function run_cmake_CUDA_GStream(){
   -D OPENCV_GENERATE_PKGCONFIG=ON \
   -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
   -D OPENCV_EXTRA_MODULES_PATH=${OPENCV_CONTRIB_SOURCE_DIR} \
-  -D PYTHON3_EXECUTABLE=${PYTHON3_EXECUTABLE} \
+  -D PYTHON_DEFAULT_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_EXECUTABLE=$(python -c "import sys; print(sys.executable)")   \
+  -D PYTHON3_NUMPY_INCLUDE_DIRS=$(python -c "import numpy; print (numpy.get_include())") \
+  -D PYTHON3_PACKAGES_PATH=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") \ 
   -D INSTALL_C_EXAMPLES=OFF \
   -D INSTALL_PYTHON_EXAMPLES=ON \
   -D BUILD_NEW_PYTHON_SUPPORT=ON \
