@@ -31,11 +31,11 @@ sudo ./download_dependency.sh
 ###  Step.2:
 Write your parameters
 ```bash
-version             =   your_opencv_lib_version
-root                =   your_opencv_code_path
-install_prefix      =   your_opencv_lib_install_path
-python_interpreter  =   your_python_interpreter_path (maybe you don`t need this)
-num_of_cpu          =   your_cpu_thread_numbers
+version             =   <your_opencv_lib_version>
+root                =   <your_opencv_code_path>
+install_prefix      =   <your_opencv_lib_install_path>
+python_interpreter  =   <your_python_interpreter_path>(maybe you don`t need this)
+num_of_cpu          =   <your_cpu_thread_numbers>
 ```
 
 ```bash
