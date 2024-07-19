@@ -23,7 +23,7 @@ opencv-4.x/
 ###  Step.1:
 Download opencv dependency libs
 ```bash
-git clone https://github.com/Akira-404/opencv-builder
+git clone https://github.com/akira4O4/opencv-builder
 cd opencv-build
 sudo ./download_dependency.sh
 ```
