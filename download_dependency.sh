@@ -16,8 +16,6 @@ libswscale-dev \
 libjpeg-dev \
 libtiff5-dev \
 ffmpeg \
-libtbb2 \
-libtbb-dev \
+libtbbmalloc2 \
 libpng-dev \
-libjasper-dev \
 libdc1394-dev
