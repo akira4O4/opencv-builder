@@ -1,20 +1,22 @@
 # OpenCV Builder
 
-***if your need CUDA or GStream support please modify ```build.sh```.***
+## Intro
+Here's an OpenCV automated build script that includes dependency download and code compilation/install features. You only need to fill in a few parameters to complete the automation process.
+
 ---
 ## Usage
 
 ###  Step.0:
 Download opencv and contrib source code
 ```bash
-mkdir opencv_4.x  
-cd opencv_4.x
+mkdir opencv_<4.x>
+cd opencv_<4.x>
 git clone https://github.com/opencv/opencv.git
 git clone https://github.com/opencv/opencv_contrib.git
 ```
-Like this code tree:
+Tree:
 ```bash
-opencv-4.x/
+opencv_<4.x>/
 ├── opencv
 └── opencv_contrib
 ```
@@ -31,11 +33,11 @@ sudo ./download_dependency.sh
 ###  Step.2:
 Write your parameters
 ```bash
-version             =   <your_opencv_lib_version>
-root                =   <your_opencv_code_path>
-install_prefix      =   <your_opencv_lib_install_path>
-python_interpreter  =   <your_python_interpreter_path>(maybe you don`t need this)
-num_of_cpu          =   <your_cpu_thread_numbers>
+version             =   <4.x>
+root                =   <your/path/opencv_4.x>
+install_prefix      =   </opt/opencv_4.x/build>
+python_interpreter  =   <python_interpreter_path>(maybe you don`t need that)
+num_of_cpu          =   <cpu_thread_numbers>
 ```
 
 ```bash
